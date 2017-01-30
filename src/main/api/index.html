@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>User System Api</title>
+</head>
+<body>
+
+<div id="app">
+
+	<div class="login">
+		<input type="text" id="input-uid-login" placeholder="UID">
+		<input type="text" id="input-pwd-login" placeholder="PWD">
+		<button id="btn-login">Login</button>
+	</div>
+
+
+	<hr>
+	<div class="register">
+		
+		<input type="text" id="input-uid-register" placeholder="UID">
+		<input type="text" id="input-pwd-register" placeholder="PWD">
+		<button id="btn-register">Register</button>
+
+	</div>
+
+	<hr>
+
+	<div class="modify-pwd">
+		
+		<p>
+			<input type="text" id="input-uid-modify-pwd" placeholder="UID">
+			<input type="text" id="input-pwd-modify-pwd" placeholder="PWD">
+		</p>
+		<p>
+			<input type="text" id="input-uid-modify-pwd-target" placeholder="UID">			
+			<input type="text" id="input-pwd-modify-pwd-target" placeholder="PWD">
+		</p>
+		<button id="btn-modify-pwd">Modify Password</button>
+
+	</div>
+
+	<hr>
+	
+	<div class="modify-group">
+		
+		<p>
+			<input type="text" id="input-uid-modify-group" placeholder="UID">
+			<input type="text" id="input-pwd-modify-group" placeholder="PWD">
+		</p>
+		<p>
+			<input type="text" id="input-uid-modify-group-target" placeholder="UID">			
+			<input type="text" id="input-group-modify-group-target" placeholder="GROUP">
+		</p>
+		<button id="btn-modify-group">Modify Group</button>
+
+	</div>
+
+	<hr>
+
+	<div class="get-all-user">
+		<button id="btn-users">Get All Users</button>
+	</div>
+
+	<hr>
+
+	<div class="get-all-group">
+		<button id="btn-groups">Get All Groups</button>
+	</div>
+
+</div>
+
+<script src="./dst/bundle.js"></script>
+
+</body>
+</html>
