@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false">
+    <diskStore path="c:/usersys/cache" />
+    <defaultCache eternal="false" maxElementsInMemory="1000"
+                  timeToIdleSeconds="20" timeToLiveSeconds="20" overflowToDisk="false"
+                  maxEntriesLocalDisk="10000000"
+                  diskExpiryThreadIntervalSeconds="20" memoryStoreEvictionPolicy="LRU" />
+</ehcache>
