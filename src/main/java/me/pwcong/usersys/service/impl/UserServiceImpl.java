@@ -3,6 +3,7 @@ package me.pwcong.usersys.service.impl;
 import me.pwcong.usersys.dao.UserMapper;
 import me.pwcong.usersys.entity.User;
 import me.pwcong.usersys.service.UserGroupService;
+import me.pwcong.usersys.service.UserInfoService;
 import me.pwcong.usersys.service.UserService;
 import me.pwcong.usersys.utils.DigestCoder;
 import me.pwcong.usersys.utils.UUIDUtils;
@@ -25,15 +26,14 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     UserGroupService userGroupService;
+    @Autowired
+    UserInfoService userInfoService;
 
     public User check(User user) throws Exception {
 
         User _user;
 
-        if(user.getUid()==null)
-            throw new Exception("用户名错误");
-
-        _user = userMapper.findByUID(user.getUid());
+        _user = getUser(user.getUid());
 
         if(_user==null)
             throw new Exception("用户不存在");
@@ -42,6 +42,16 @@ public class UserServiceImpl implements UserService{
             throw new Exception("密码错误");
 
         return _user;
+
+    }
+
+
+    public User getUser(String uid) throws Exception {
+
+        if(uid==null)
+            throw new Exception("用户名不合法");
+
+        return userMapper.findByUID(uid);
 
     }
 
@@ -54,14 +64,13 @@ public class UserServiceImpl implements UserService{
 
     public void register(User user) throws Exception {
 
-        User _user = userMapper.findByUID(user.getUid());
-        if(_user!=null)
+        if(getUser(user.getUid())!=null)
             throw new Exception("用户已存在");
 
-        if(user.getUid()==null||user.getUid().length()<6||user.getUid().length()>18)
+        if(user.getUid().length()<6||user.getUid().length()>18)
             throw new Exception("用户名不合法");
 
-        if(user.getPwd()==null||user.getPwd().length()<6||user.getPwd().length()>255)
+        if(user.getPwd()==null)
             throw new Exception("密码不合法");
 
         User register = new User();
@@ -72,6 +81,38 @@ public class UserServiceImpl implements UserService{
         register.setUpdatedAt(new Date());
 
         userMapper.add(register);
+        userInfoService.initialUserInfo(register.getUid());
+
+    }
+
+    public void remove(User who, User target) throws Exception {
+
+        User _who = check(who);
+
+        User _target = getUser(target.getUid());
+
+        if(_target==null)
+            throw new Exception("用户不存在");
+
+        if(_who.getUid().equals(_target.getUid())){
+            userMapper.deleteByUID(_target.getUid());
+            userInfoService.remove(_target.getUid());
+        }else {
+
+            boolean whoIsAdmin = userGroupService.isAdmin(_who.getGid());
+            boolean whoIsRoot = userGroupService.isRoot(_who.getGid());
+            boolean targetIsAdmin = userGroupService.isAdmin(_target.getGid());
+
+            if((!targetIsAdmin&&whoIsAdmin) || (targetIsAdmin&&whoIsRoot)){
+                userMapper.deleteByUID(_target.getUid());
+                userInfoService.remove(_target.getUid());
+            }
+            else
+                throw new Exception("没有权限");
+
+
+        }
+
 
     }
 
@@ -85,8 +126,8 @@ public class UserServiceImpl implements UserService{
             _user.setPwd(DigestCoder.MD5Encode(target.getPwd()+_user.getPwd_salt()));
             userMapper.update(_user);
 
-        }else if (userGroupService.isAdmin(_user)){
-                User t = userMapper.findByUID(target.getUid());
+        }else if (userGroupService.isAdmin(_user.getGid())){
+                User t = getUser(target.getUid());
                 if(t!=null){
                     t.setPwd_salt(UUIDUtils.uuid(8));
                     t.setPwd(DigestCoder.MD5Encode(target.getPwd()+t.getPwd_salt()));
@@ -104,13 +145,11 @@ public class UserServiceImpl implements UserService{
 
         User _user = check(who);
 
-        if(userGroupService.isRoot(_user)){
+        if(userGroupService.isRoot(_user.getGid())){
 
-            User t = userMapper.findByUID(target.getUid());
+            User t = getUser(target.getUid());
 
             if(t!=null){
-
-                userGroupService.check(target.getGid());
 
                 t.setGid(target.getGid());
                 t.setUpdatedAt(new Date());

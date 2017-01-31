@@ -12,11 +12,13 @@
     <typeAliases>
         <typeAlias type="me.pwcong.usersys.entity.User" alias="User"/>
         <typeAlias type="me.pwcong.usersys.entity.UserGroup" alias="UserGroup"/>
+        <typeAlias type="me.pwcong.usersys.entity.UserInfo" alias="UserInfo"/>
     </typeAliases>
 
     <mappers>
         <mapper resource="mybatis/UserMapper.xml"/>
         <mapper resource="mybatis/UserGroupMapper.xml"/>
+        <mapper resource="mybatis/UserInfoMapper.xml"/>
     </mappers>
 
 

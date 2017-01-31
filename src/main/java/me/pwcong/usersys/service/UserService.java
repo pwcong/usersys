@@ -10,8 +10,10 @@ import java.util.List;
 public interface UserService {
 
     public User check(User user) throws Exception;
+    public User getUser(String uid) throws Exception;
     public String login(User user, String time) throws Exception;
     public void register(User user) throws Exception;
+    public void remove(User who,User target) throws Exception;
     public void modifyPassword(User who,User target) throws Exception;
     public void modifyGroup(User who,User target) throws Exception;
     public List<String> getAllUsers() throws Exception;

@@ -932,7 +932,7 @@ document.getElementById('btn-modify-group').onclick = function () {
 
 document.getElementById('btn-users').onclick = function () {
 
-	fetch('http://localhost:8080/user/query.action').then(function (response) {
+	fetch('http://localhost:8080/user/query_all.action').then(function (response) {
 		return response.json();
 	}).then(function (json) {
 		console.log(json);
@@ -943,7 +943,126 @@ document.getElementById('btn-users').onclick = function () {
 
 document.getElementById('btn-groups').onclick = function () {
 
-	fetch('http://localhost:8080/user_group/query.action').then(function (response) {
+	fetch('http://localhost:8080/user_group/query_all.action').then(function (response) {
+		return response.json();
+	}).then(function (json) {
+		console.log(json);
+	}).catch(function (ex) {
+		console.log(ex);
+	});
+};
+
+document.getElementById('btn-remove-user').onclick = function () {
+
+	fetch('http://localhost:8080/user/remove.action', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			user: {
+				uid: document.getElementById('input-uid-remove-user').value,
+				pwd: (0, _blueimpMd2.default)(document.getElementById('input-pwd-remove-user').value)
+			},
+			target: {
+				uid: document.getElementById('input-uid-remove-user-target').value
+			}
+		})
+	}).then(function (response) {
+		return response.json();
+	}).then(function (json) {
+		console.log(json);
+	}).catch(function (ex) {
+		console.log(ex);
+	});
+};
+
+document.getElementById('btn-group').onclick = function () {
+
+	fetch('http://localhost:8080/user_group/query.action', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			user: {
+				uid: document.getElementById('input-uid-group').value
+			}
+		})
+	}).then(function (response) {
+		return response.json();
+	}).then(function (json) {
+		console.log(json);
+	}).catch(function (ex) {
+		console.log(ex);
+	});
+};
+
+document.getElementById('btn-user-info').onclick = function () {
+
+	fetch('http://localhost:8080/user_info/query.action', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			user: {
+				uid: document.getElementById('input-uid-user-info').value
+			}
+		})
+	}).then(function (response) {
+		return response.json();
+	}).then(function (json) {
+		console.log(json);
+	}).catch(function (ex) {
+		console.log(ex);
+	});
+};
+
+document.getElementById('btn-get-user-info').onclick = function () {
+
+	fetch('http://localhost:8080/user_info/query.action', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			user: {
+				uid: document.getElementById('input-uid-modify-user-info-uid').value
+			}
+		})
+	}).then(function (response) {
+		return response.json();
+	}).then(function (json) {
+		console.log(json);
+
+		document.getElementById('input-uid-modify-user-info-name').value = json.result.name;
+	}).catch(function (ex) {
+		console.log(ex);
+	});
+};
+
+document.getElementById('btn-modify-user-info').onclick = function () {
+
+	fetch('http://localhost:8080/user_info/modify.action', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			user: {
+				uid: document.getElementById('input-uid-modify-user-info').value,
+				pwd: (0, _blueimpMd2.default)(document.getElementById('input-pwd-modify-user-info').value)
+			},
+			target: {
+				uid: document.getElementById('input-uid-modify-user-info-uid').value
+			},
+			userInfo: {
+				uid: document.getElementById('input-uid-modify-user-info-uid').value,
+				name: document.getElementById('input-uid-modify-user-info-name').value
+			}
+		})
+	}).then(function (response) {
 		return response.json();
 	}).then(function (json) {
 		console.log(json);

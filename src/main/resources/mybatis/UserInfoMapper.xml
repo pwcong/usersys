@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.pwcong.usersys.dao.UserInfoMapper">
+
+     <!--<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>-->
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+
+    <insert id="add" parameterType="UserInfo">
+        INSERT INTO
+        user_info(uid, name, sex, birthday, signature, email, phone)
+        VALUES
+        (#{uid},#{name},#{sex},#{birthday},#{signature},#{email},#{phone})
+    </insert>
+
+    <delete id="deleteByUID" parameterType="java.lang.String">
+        DELETE FROM user_info
+        WHERE uid=#{uid}
+    </delete>
+
+    <select id="findByUID" parameterType="java.lang.String"
+            resultType="UserInfo">
+        SELECT *
+        FROM user_info
+        WHERE
+        uid=#{uid}
+    </select>
+
+    <update id="update" parameterType="UserInfo">
+
+        UPDATE user
+        SET
+        name=#{name},sex=#{sex},birthday=#{birthday},
+        signature=#{signature},email=#{email},
+        phone=#{phone}
+        WHERE uid=#{uid}
+
+    </update>
+
+</mapper>

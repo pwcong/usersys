@@ -2,6 +2,8 @@ package me.pwcong.usersys.controller;
 
 import me.pwcong.usersys.service.UserService;
 import me.pwcong.usersys.vo.UserVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,8 @@ import java.util.List;
 
 @Controller
 public class UserController extends BaseController{
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     UserService userService;
@@ -29,7 +33,7 @@ public class UserController extends BaseController{
             return new Response(OK,"登陆成功",token);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("login",e);
             return new Response(ERROR, e.getMessage(), null);
         }
     }
@@ -42,7 +46,7 @@ public class UserController extends BaseController{
             userService.register(userVo.getUser());
             return new Response(OK,"注册成功",null);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("register",e);
             return new Response(ERROR,e.getMessage(),null);
         }
 
@@ -56,7 +60,7 @@ public class UserController extends BaseController{
             userService.modifyPassword(userVo.getUser(),userVo.getTarget());
             return new Response(OK,"修改成功",null);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("modifyPassword",e);
             return new Response(ERROR,e.getMessage(),null);
         }
     }
@@ -69,7 +73,8 @@ public class UserController extends BaseController{
             userService.modifyGroup(userVo.getUser(),userVo.getTarget());
             return new Response(OK,"修改成功",null);
         } catch (Exception e) {
-            e.printStackTrace();
+
+            logger.error("modifyGroup",e);
             return new Response(ERROR,e.getMessage(),null);
 
         }
@@ -77,14 +82,29 @@ public class UserController extends BaseController{
     }
 
     @CrossOrigin
-    @RequestMapping(value="/user/query.action",method=RequestMethod.GET)
-    public @ResponseBody Response query(){
+    @RequestMapping(value="/user/remove.action",method=RequestMethod.POST)
+    public @ResponseBody Response remove(@RequestBody UserVo userVo){
+
+
+        try {
+            userService.remove(userVo.getUser(),userVo.getTarget());
+            return new Response(OK,"注销成功",null);
+        } catch (Exception e) {
+            logger.error("remove",e);
+            return new Response(ERROR,e.getMessage(),null);
+        }
+
+    }
+
+    @CrossOrigin
+    @RequestMapping(value="/user/query_all.action",method=RequestMethod.GET)
+    public @ResponseBody Response queryAll(){
 
         try {
             List<String> users = userService.getAllUsers();
             return new Response(OK,"获取成功",users);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("query_all",e);
             return new Response(ERROR,e.getMessage(),null);
         }
 
