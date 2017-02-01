@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService{
 
     }
 
-    public String login(User user, String time) throws Exception {
+    public String login(User user, Long time) throws Exception {
 
         check(user);
 

@@ -834,13 +834,12 @@ var _blueimpMd2 = _interopRequireDefault(_blueimpMd);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 document.getElementById('btn-login').onclick = function () {
-	fetch('http://localhost:8080/user/login.action', {
+	fetch('/user/login.action', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
-			time: new Date().getTime(),
 			user: {
 				uid: document.getElementById('input-uid-login').value,
 				pwd: (0, _blueimpMd2.default)(document.getElementById('input-pwd-login').value)
@@ -858,7 +857,7 @@ document.getElementById('btn-login').onclick = function () {
 
 document.getElementById('btn-register').onclick = function () {
 
-	fetch('http://localhost:8080/user/register.action', {
+	fetch('/user/register.action', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -880,10 +879,11 @@ document.getElementById('btn-register').onclick = function () {
 
 document.getElementById('btn-modify-pwd').onclick = function () {
 
-	fetch('http://localhost:8080/user/modify_password.action', {
+	fetch('/user/modify_password.action', {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			'Token': document.getElementById('input-token-modify-pwd').value
 		},
 		body: JSON.stringify({
 			user: {
@@ -906,10 +906,11 @@ document.getElementById('btn-modify-pwd').onclick = function () {
 
 document.getElementById('btn-modify-group').onclick = function () {
 
-	fetch('http://localhost:8080/user/modify_group.action', {
+	fetch('/user/modify_group.action', {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			'Token': document.getElementById('input-token-modify-group').value
 		},
 		body: JSON.stringify({
 			user: {
@@ -932,7 +933,12 @@ document.getElementById('btn-modify-group').onclick = function () {
 
 document.getElementById('btn-users').onclick = function () {
 
-	fetch('http://localhost:8080/user/query_all.action').then(function (response) {
+	fetch('/user/query_all.action', {
+		method: 'POST',
+		headers: {
+			"Token": document.getElementById('input-token-users').value
+		}
+	}).then(function (response) {
 		return response.json();
 	}).then(function (json) {
 		console.log(json);
@@ -943,7 +949,12 @@ document.getElementById('btn-users').onclick = function () {
 
 document.getElementById('btn-groups').onclick = function () {
 
-	fetch('http://localhost:8080/user_group/query_all.action').then(function (response) {
+	fetch('/user_group/query_all.action', {
+		method: 'POST',
+		headers: {
+			"Token": document.getElementById('input-token-groups').value
+		}
+	}).then(function (response) {
 		return response.json();
 	}).then(function (json) {
 		console.log(json);
@@ -954,10 +965,11 @@ document.getElementById('btn-groups').onclick = function () {
 
 document.getElementById('btn-remove-user').onclick = function () {
 
-	fetch('http://localhost:8080/user/remove.action', {
+	fetch('/user/remove.action', {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			'Token': document.getElementById('input-token-remove-user').value
 		},
 		body: JSON.stringify({
 			user: {
@@ -979,10 +991,11 @@ document.getElementById('btn-remove-user').onclick = function () {
 
 document.getElementById('btn-group').onclick = function () {
 
-	fetch('http://localhost:8080/user_group/query.action', {
+	fetch('/user_group/query.action', {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			'Token': document.getElementById('input-token-group').value
 		},
 		body: JSON.stringify({
 			user: {
@@ -1000,10 +1013,11 @@ document.getElementById('btn-group').onclick = function () {
 
 document.getElementById('btn-user-info').onclick = function () {
 
-	fetch('http://localhost:8080/user_info/query.action', {
+	fetch('/user_info/query.action', {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			'Token': document.getElementById('input-token-user-info').value
 		},
 		body: JSON.stringify({
 			user: {
@@ -1021,10 +1035,11 @@ document.getElementById('btn-user-info').onclick = function () {
 
 document.getElementById('btn-get-user-info').onclick = function () {
 
-	fetch('http://localhost:8080/user_info/query.action', {
+	fetch('/user_info/query.action', {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			'Token': document.getElementById('input-token-modify-user-info').value
 		},
 		body: JSON.stringify({
 			user: {
@@ -1044,18 +1059,16 @@ document.getElementById('btn-get-user-info').onclick = function () {
 
 document.getElementById('btn-modify-user-info').onclick = function () {
 
-	fetch('http://localhost:8080/user_info/modify.action', {
+	fetch('/user_info/modify.action', {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			'Token': document.getElementById('input-token-modify-user-info').value
 		},
 		body: JSON.stringify({
 			user: {
 				uid: document.getElementById('input-uid-modify-user-info').value,
 				pwd: (0, _blueimpMd2.default)(document.getElementById('input-pwd-modify-user-info').value)
-			},
-			target: {
-				uid: document.getElementById('input-uid-modify-user-info-uid').value
 			},
 			userInfo: {
 				uid: document.getElementById('input-uid-modify-user-info-uid').value,

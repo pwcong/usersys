@@ -1,6 +1,8 @@
 package me.pwcong.usersys.controller;
 
+import me.pwcong.usersys.manager.LoginStateManager;
 import me.pwcong.usersys.service.UserService;
+import me.pwcong.usersys.utils.DateUtils;
 import me.pwcong.usersys.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +24,15 @@ public class UserController extends BaseController{
     @Autowired
     UserService userService;
 
-    @CrossOrigin
     @RequestMapping(value="/user/login.action",method= RequestMethod.POST)
     public @ResponseBody
     Response login(@RequestBody UserVo userVo){
 
         try {
-            String token = userService.login(userVo.getUser(),userVo.getTime());
+
+            String token = userService.login(userVo.getUser(), DateUtils.now().getTime());
+
+            LoginStateManager.getInstance().register(userVo.getUser().getUid(),token);
 
             return new Response(OK,"登陆成功",token);
 
@@ -38,7 +42,6 @@ public class UserController extends BaseController{
         }
     }
 
-    @CrossOrigin
     @RequestMapping(value="/user/register.action",method=RequestMethod.POST)
     public @ResponseBody Response register(@RequestBody UserVo userVo){
 
@@ -52,7 +55,6 @@ public class UserController extends BaseController{
 
     }
 
-    @CrossOrigin
     @RequestMapping(value="/user/modify_password.action",method=RequestMethod.POST)
     public @ResponseBody Response modifyPassword(@RequestBody UserVo userVo){
 
@@ -65,7 +67,6 @@ public class UserController extends BaseController{
         }
     }
 
-    @CrossOrigin
     @RequestMapping(value="/user/modify_group.action",method=RequestMethod.POST)
     public @ResponseBody Response modifyGroup(@RequestBody UserVo userVo){
 
@@ -81,7 +82,6 @@ public class UserController extends BaseController{
 
     }
 
-    @CrossOrigin
     @RequestMapping(value="/user/remove.action",method=RequestMethod.POST)
     public @ResponseBody Response remove(@RequestBody UserVo userVo){
 
@@ -96,8 +96,7 @@ public class UserController extends BaseController{
 
     }
 
-    @CrossOrigin
-    @RequestMapping(value="/user/query_all.action",method=RequestMethod.GET)
+    @RequestMapping(value="/user/query_all.action",method=RequestMethod.POST)
     public @ResponseBody Response queryAll(){
 
         try {

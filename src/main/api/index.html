@@ -36,6 +36,9 @@
 			<input type="text" id="input-uid-modify-pwd-target" placeholder="UID">			
 			<input type="text" id="input-pwd-modify-pwd-target" placeholder="PWD">
 		</p>
+		<p>
+			<input type="text" placeholder="TOKEN" id="input-token-modify-pwd">
+		</p>
 		<button id="btn-modify-pwd">Modify Password</button>
 
 	</div>
@@ -52,6 +55,9 @@
 			<input type="text" id="input-uid-modify-group-target" placeholder="UID">			
 			<input type="text" id="input-group-modify-group-target" placeholder="GROUP">
 		</p>
+		<p>
+			<input type="text" placeholder="TOKEN" id="input-token-modify-group">
+		</p>
 		<button id="btn-modify-group">Modify Group</button>
 
 	</div>
@@ -67,6 +73,9 @@
 		<p>
 			<input type="text" id="input-uid-remove-user-target" placeholder="UID">
 		</p>
+		<p>
+			<input type="text" placeholder="TOKEN" id="input-token-remove-user">
+		</p>
 		<button id="btn-remove-user">Remove User</button>
 
 	</div>
@@ -74,12 +83,14 @@
 	<hr>
 
 	<div class="get-all-user">
+		<input type="text" id="input-token-users" placeholder="TOKEN">
 		<button id="btn-users">Get All Users</button>
 	</div>
 
 	<hr>
 
 	<div class="get-all-group">
+		<input type="text" id="input-token-groups" placeholder="TOKEN">
 		<button id="btn-groups">Get All Groups</button>
 	</div>
 	
@@ -88,6 +99,7 @@
 	<div class="get-group">
 		
 		<input type="text" id="input-uid-group" placeholder="UID">
+		<input type="text" id="input-token-group" placeholder="TOKEN">
 		<button id="btn-group">Get Group</button>
 
 	</div>
@@ -97,7 +109,7 @@
 	<div class="user-info">
 		
 		<input type="text" id="input-uid-user-info" placeholder="UID">
-
+		<input type="text" id="input-token-user-info" placeholder="TOKEN">
 		<button id="btn-user-info">Get User Info</button>
 
 	</div>
@@ -108,6 +120,7 @@
 		
 		<input type="text" id="input-uid-modify-user-info" placeholder="UID">
 		<input type="text" id="input-pwd-modify-user-info" placeholder="PWD">
+		<input type="text" placeholder="TOKEN" id="input-token-modify-user-info">
 
 		<p>----------------</p>
 
@@ -126,7 +139,7 @@
 
 </div>
 
-<script src="./dst/bundle.js"></script>
+<script src="/bundle.js"></script>
 
 </body>
 </html>

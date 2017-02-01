@@ -23,8 +23,7 @@ public class UserGroupController extends BaseController {
     @Autowired
     UserService userService;
 
-    @CrossOrigin
-    @RequestMapping(value="/user_group/query_all.action",method= RequestMethod.GET)
+    @RequestMapping(value="/user_group/query_all.action",method= RequestMethod.POST)
     public @ResponseBody Response queryAll(){
 
         try {
@@ -36,7 +35,6 @@ public class UserGroupController extends BaseController {
 
     }
 
-    @CrossOrigin
     @RequestMapping(value="/user_group/query.action",method= RequestMethod.POST)
     public @ResponseBody Response query(@RequestBody UserGroupVo userGroupVo){
 

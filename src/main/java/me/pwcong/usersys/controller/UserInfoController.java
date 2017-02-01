@@ -21,7 +21,6 @@ public class UserInfoController extends BaseController {
     @Autowired
     UserInfoService userInfoService;
 
-    @CrossOrigin
     @RequestMapping(value="/user_info/query.action",method= RequestMethod.POST)
     public @ResponseBody
     Response query(@RequestBody UserInfoVo userInfoVo){
@@ -42,13 +41,12 @@ public class UserInfoController extends BaseController {
 
     }
 
-    @CrossOrigin
     @RequestMapping(value="/user_info/modify.action",method= RequestMethod.POST)
     public @ResponseBody
     Response modify(@RequestBody UserInfoVo userInfoVo){
 
         try {
-            userInfoService.modify(userInfoVo.getUser(),userInfoVo.getTarget(),userInfoVo.getUserInfo());
+            userInfoService.modify(userInfoVo.getUser(),userInfoVo.getUserInfo());
             return new Response(OK,"修改成功",null);
         } catch (Exception e) {
             logger.error("query",e);

@@ -30,7 +30,7 @@
 
     <update id="update" parameterType="UserInfo">
 
-        UPDATE user
+        UPDATE user_info
         SET
         name=#{name},sex=#{sex},birthday=#{birthday},
         signature=#{signature},email=#{email},

@@ -9,4 +9,14 @@
 
     <mvc:annotation-driven/>
 
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**/*.action"/><!-- 拦截后缀为.aspx的请求 -->
+            <mvc:exclude-mapping path="/user/login.action"/>
+            <mvc:exclude-mapping path="/user/register.action"/>
+            <bean class="me.pwcong.usersys.interceptor.LoginInterceptor">
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>

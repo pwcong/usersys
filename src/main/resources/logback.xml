@@ -10,7 +10,8 @@
     <appender name="FILE"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>c:/usersys/logs.%d{yyyy-MM-dd}.log
+            <FileNamePattern>
+                c:/usersys/logs.%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -22,6 +23,7 @@
     <root>
         <level value="DEBUG" />
         <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
     </root>
 
 </configuration>

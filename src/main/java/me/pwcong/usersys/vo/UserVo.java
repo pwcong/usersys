@@ -7,24 +7,14 @@ import me.pwcong.usersys.entity.User;
  */
 public class UserVo extends BaseVo {
 
-    public String time;
     public User user;
     public User target;
 
     public UserVo(){}
 
-    public UserVo(String time, User user, User target) {
-        this.time = time;
+    public UserVo(User user, User target) {
         this.user = user;
         this.target = target;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public User getUser() {

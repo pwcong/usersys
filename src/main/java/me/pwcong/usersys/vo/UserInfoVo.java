@@ -9,14 +9,12 @@ import me.pwcong.usersys.entity.UserInfo;
 public class UserInfoVo extends BaseVo {
 
     private User user;
-    private User target;
     private UserInfo userInfo;
 
     public UserInfoVo(){}
 
-    public UserInfoVo(User user, User target, UserInfo userInfo) {
+    public UserInfoVo(User user, UserInfo userInfo) {
         this.user = user;
-        this.target = target;
         this.userInfo = userInfo;
     }
 
@@ -26,14 +24,6 @@ public class UserInfoVo extends BaseVo {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public User getTarget() {
-        return target;
-    }
-
-    public void setTarget(User target) {
-        this.target = target;
     }
 
     public UserInfo getUserInfo() {
