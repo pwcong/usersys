@@ -1,0 +1,18 @@
+:local .register-form {
+	opacity: 0.5;
+	padding: 40px;
+	background-color: white;
+	min-width: 400px;
+	border-radius: 8px;
+	transition: opacity 0.3s;
+}
+
+:local .register-form:hover{
+	opacity: 1;
+
+}
+
+:local .register-form-button {
+	margin-top: 20px;
+	width: 100%;
+}

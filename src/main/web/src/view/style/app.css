@@ -1,0 +1,8 @@
+:global body{
+	font-family: 'Microsoft YaHei', sans-serif
+}
+
+:local .root{
+	width: 100%;
+
+}

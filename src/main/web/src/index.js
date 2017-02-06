@@ -8,6 +8,8 @@ import { Router, browserHistory } from 'react-router'
 import reducer from './reducer'
 import routes from './routes'
 
+
+
 const store = createStore(reducer,applyMiddleware(thunk))
 
 ReactDOM.render(

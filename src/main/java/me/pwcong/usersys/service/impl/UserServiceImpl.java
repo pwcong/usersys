@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService{
         if(getUser(user.getUid())!=null)
             throw new Exception("用户已存在");
 
-        if(user.getUid().length()<6||user.getUid().length()>18)
+        if(user.getUid().length()<6||user.getUid().length()>32)
             throw new Exception("用户名不合法");
 
         if(user.getPwd()==null)

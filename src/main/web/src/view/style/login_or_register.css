@@ -1,0 +1,9 @@
+:local .root{
+	height: 768px;
+	background-size: cover;
+	background-image: url(/public/imgs/bg.jpeg);
+	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

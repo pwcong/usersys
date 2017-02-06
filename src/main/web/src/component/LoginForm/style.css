@@ -1,0 +1,18 @@
+:local .login-form {
+	opacity: 0.5;
+	padding: 40px;
+	background-color: white;
+	max-width: 400px;
+	border-radius: 8px;
+	transition: opacity 0.3s;
+}
+
+:local .login-form:hover{
+	opacity: 1;
+
+}
+
+:local .login-form-button {
+	margin-top: 20px;
+	width: 100%;
+}
