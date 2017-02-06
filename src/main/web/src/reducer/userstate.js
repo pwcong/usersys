@@ -1,12 +1,11 @@
-import { browserHistory } from 'react-router'
-
 import { 
 	USERSTATE_LOGIN_START, 
 	USERSTATE_LOGIN_FAILED, 
 	USERSTATE_LOGIN_SUCCESS,
 	USERSTATE_REGIST_START,
 	USERSTATE_REGIST_FAILED,
-	USERSTATE_REGIST_SUCCESS
+	USERSTATE_REGIST_SUCCESS,
+	USERSTATE_GET_GROUP
 } from '../actions/userstate'
 
 export const INITIAL_USERSTATE = {
@@ -20,7 +19,8 @@ export const INITIAL_USERSTATE = {
 	user: {
 		uid: null,
 		pwd: null
-	}
+	},
+	group: null
 }
 
 export default (state=INITIAL_USERSTATE,action) => {
@@ -34,8 +34,6 @@ export default (state=INITIAL_USERSTATE,action) => {
 				isLogining: true
 			})
 		case USERSTATE_LOGIN_SUCCESS:
-
-			browserHistory.push('/home')
 
 			return Object.assign({},state,{
 				isLogined: true,
@@ -69,6 +67,10 @@ export default (state=INITIAL_USERSTATE,action) => {
 			return Object.assign({},state,{
 				isRegisting: false,
 				registFailed: false
+			})
+		case USERSTATE_GET_GROUP:
+			return Object.assign({},state,{
+				group: action.group
 			})
 		default: 
 			return state

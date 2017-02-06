@@ -3,7 +3,7 @@ import LoginForm from '../component/LoginForm'
 import RegisterForm from '../component/RegisterForm'
 import style from './style/login_or_register.css'
 import { connect } from 'react-redux'
-
+import { browserHistory } from 'react-router'
 import { toLogin, toRegister } from '../actions/userstate'
 
 class LoginOrRegister extends React.Component{
@@ -20,7 +20,9 @@ class LoginOrRegister extends React.Component{
 	}
 
   handleOnLoginSubmit(values){
-    this.props.dispatch(toLogin(values.uid,values.pwd))
+    this.props.dispatch(toLogin(values.uid,values.pwd,()=>{
+      browserHistory.push('/home')
+    }))
   }
 
   handleOnRegisterSubmit(values){

@@ -28,7 +28,15 @@ export function loginSuccess(token,uid,pwd){
 	})
 }
 
-export function toLogin(uid,pwd){
+export const USERSTATE_GET_GROUP = "USERSTATE_GET_GROUP"
+export function getGroup(group){
+	return ({
+		type: USERSTATE_GET_GROUP,
+		group
+	})
+}
+
+export function toLogin(uid,pwd,callbackWhenSuccess){
 
 	return ( dispatch ) => {
 
@@ -50,10 +58,39 @@ export function toLogin(uid,pwd){
 		}).then( response => {
 			return response.json()
 		}).then( json => {
-			if(json.status === 200)
+
+			if(json.status === 200){
 				dispatch(loginSuccess(json.result,uid,pwd))
+
+				fetch('/user_group/query.action',{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'Token': json.result
+					},
+					body: JSON.stringify({
+						user: {
+							uid: uid
+						}
+					})
+				}).then( response => {
+
+					return response.json()
+					
+				}).then( json => {
+
+					if(json.status === 200){
+						dispatch(getGroup(json.result))
+						callbackWhenSuccess()
+					}
+
+				}).catch( ex => {
+					
+				})
+			}
 			else
 				dispatch(loginFailed(json.message))
+
 		}).catch( ex => {
 			dispatch(loginFailed("未知错误"))
 		})

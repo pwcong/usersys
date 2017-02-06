@@ -17,6 +17,7 @@ class Main extends React.Component {
     }
 
     this.onCollapse = this.onCollapse.bind(this)
+    this.componentDidMount = this.componentDidMount.bind(this)
 
   }
 
@@ -86,11 +87,18 @@ class Main extends React.Component {
       </Layout>
     )
   }
+
+  componentDidMount() {
+    // if(!this.props.userstate.isLogined)
+    //   browserHistory.push('/')
+  }
+
+
 }
 
 function select(state){
   return ({
-
+    userstate: state.userstate
   })
 }
 
