@@ -16,5 +16,5 @@ public interface UserService {
     public void remove(User who,User target) throws Exception;
     public void modifyPassword(User who,User target) throws Exception;
     public void modifyGroup(User who,User target) throws Exception;
-    public List<String> getAllUsers() throws Exception;
+    public List<User> getAllUsers() throws Exception;
 }

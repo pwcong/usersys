@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService{
             boolean whoIsRoot = userGroupService.isRoot(_who.getGid());
             boolean targetIsAdmin = userGroupService.isAdmin(_target.getGid());
 
-            if((!targetIsAdmin&&whoIsAdmin) || (targetIsAdmin&&whoIsRoot)){
+            if((!targetIsAdmin&&whoIsAdmin) || whoIsRoot){
                 userMapper.deleteByUID(_target.getUid());
                 userInfoService.remove(_target.getUid());
             }
@@ -118,26 +118,35 @@ public class UserServiceImpl implements UserService{
 
     public void modifyPassword(User who, User target) throws Exception {
 
-        User _user = check(who);
+        User _who = check(who);
+        User _target = getUser(target.getUid());
 
-        if(who.getUid().equals(target.getUid())){
+        if(_target==null)
+            throw new Exception("用户不存在");
 
-            _user.setPwd_salt(UUIDUtils.uuid(8));
-            _user.setPwd(DigestCoder.MD5Encode(target.getPwd()+_user.getPwd_salt()));
-            userMapper.update(_user);
+        if(_who.getUid().equals(_target.getUid())){
 
-        }else if (userGroupService.isAdmin(_user.getGid())){
-                User t = getUser(target.getUid());
-                if(t!=null){
-                    t.setPwd_salt(UUIDUtils.uuid(8));
-                    t.setPwd(DigestCoder.MD5Encode(target.getPwd()+t.getPwd_salt()));
-                    t.setUpdatedAt(new Date());
-                    userMapper.update(t);
-                }else
-                    throw new Exception("用户不存在");
+            _target.setPwd_salt(UUIDUtils.uuid(8));
+            _target.setPwd(DigestCoder.MD5Encode(target.getPwd()+_target.getPwd_salt()));
+            _target.setUpdatedAt(new Date());
+            userMapper.update(_target);
+
+        }else {
+
+            boolean whoIsAdmin = userGroupService.isAdmin(_who.getGid());
+            boolean whoIsRoot = userGroupService.isRoot(_who.getGid());
+            boolean targetIsAdmin = userGroupService.isAdmin(_target.getGid());
+
+            if((!targetIsAdmin&&whoIsAdmin) || whoIsRoot){
+                _target.setPwd_salt(UUIDUtils.uuid(8));
+                _target.setPwd(DigestCoder.MD5Encode(target.getPwd()+_target.getPwd_salt()));
+                _target.setUpdatedAt(new Date());
+                userMapper.update(_target);
             }
-        else
-            throw new Exception("没有权限");
+            else
+                throw new Exception("没有权限");
+
+        }
 
     }
 
@@ -163,15 +172,19 @@ public class UserServiceImpl implements UserService{
 
     }
 
-    public List<String> getAllUsers() throws Exception {
+    public List<User> getAllUsers() throws Exception {
 
         List<User> userList = userMapper.find();
 
-        List<String> users = new ArrayList<String>();
+        List<User> users = new ArrayList<>();
 
         for(User user : userList){
 
-            users.add(user.getUid());
+            user.setUpdatedAt(null);
+            user.setId(null);
+            user.setPwd(null);
+            user.setPwd_salt(null);
+            users.add(user);
 
         }
 

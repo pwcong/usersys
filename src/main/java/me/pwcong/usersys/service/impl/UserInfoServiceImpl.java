@@ -74,7 +74,7 @@ public class UserInfoServiceImpl implements UserInfoService {
             boolean whoIsRoot = userGroupService.isRoot(_who.getGid());
             boolean targetIsAdmin = userGroupService.isAdmin(_target.getGid());
 
-            if((!targetIsAdmin&&whoIsAdmin) || (targetIsAdmin&&whoIsRoot)){
+            if((!targetIsAdmin&&whoIsAdmin) || whoIsRoot){
                 userInfoMapper.update(_userInfo);
             }
             else

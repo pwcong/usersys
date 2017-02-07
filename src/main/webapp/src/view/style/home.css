@@ -1,0 +1,28 @@
+:local .logo{
+
+	padding: 20px 0px 20px 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
+
+:local .logo h1{
+	
+	color: white;
+}
+
+:local .content-root{
+	margin: 16px;
+}
+
+:local .content{
+	min-width: 500px;
+	padding: 24px;
+	background-color: #fff;
+	min-height: 600px;
+}
+
+:local .footer{
+	text-align: center;
+}

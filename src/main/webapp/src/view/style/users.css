@@ -1,0 +1,22 @@
+:local .root{
+	width: 100%;
+}
+
+:local .content{
+
+	width: 100%;
+
+}
+
+:local .button{
+	margin-bottom: 8px;
+}
+
+:local .table{
+	width: 100%;
+}
+
+:local .layer-loading{
+	text-align: center;
+	width: 100%;
+}	

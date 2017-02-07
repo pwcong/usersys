@@ -1,0 +1,30 @@
+:local .root{
+
+	width: 100%;
+	display: flex;
+	flex-flow: row wrap;
+
+
+}
+
+:local .card-img{
+	width: 100%;
+}
+
+:local .card-img img{
+	width: 100%;
+}
+
+:local .card-content{
+	padding: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+:local .layer-loading{
+	width: 100%;
+	text-align: center;
+
+
+}

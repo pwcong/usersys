@@ -1,5 +1,6 @@
 package me.pwcong.usersys.controller;
 
+import me.pwcong.usersys.entity.User;
 import me.pwcong.usersys.manager.LoginStateManager;
 import me.pwcong.usersys.service.UserService;
 import me.pwcong.usersys.utils.DateUtils;
@@ -100,7 +101,7 @@ public class UserController extends BaseController{
     public @ResponseBody Response queryAll(){
 
         try {
-            List<String> users = userService.getAllUsers();
+            List<User> users = userService.getAllUsers();
             return new Response(OK,"获取成功",users);
         } catch (Exception e) {
             logger.error("query_all",e);
