@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { Form, Input, Icon, Row, Col, Button, Alert } from 'antd'
+import { Form, Input, Button, Alert } from 'antd'
 
 import style from './style.css'
 
@@ -101,7 +101,7 @@ const RegisterForm = Form.create()(React.createClass({
               validator: this.checkPassword,
             }],
           })(
-            <Input type="password" />
+            <Input type="password" placeholder="请再次输入密码"/>
           )}
         </FormItem>
 

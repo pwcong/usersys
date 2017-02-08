@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Table, Icon, Button, Spin, notification, Modal, message } from 'antd'
 import { browserHistory } from 'react-router'
-import { getUsersAndGroups, deleteUser } from '../actions/data'
+import { getUsersAndGroups, deleteUser, getUserInfo } from '../actions/data'
+import UserInfoForm from '../component/UserInfoForm'
 
 import style from './style/users.css'
 
@@ -18,6 +19,7 @@ class Users extends React.Component{
 		this.handleDeleteUser = this.handleDeleteUser.bind(this)
 		this.handleReviewUser = this.handleReviewUser.bind(this)
 		this.handleAddUser = this.handleAddUser.bind(this)
+		this.handleEditUser = this.handleEditUser.bind(this)
 	}
 
 	componentDidMount() {
@@ -34,7 +36,28 @@ class Users extends React.Component{
 	}
 
 	handleReviewUser(uid){
-		console.log(uid)
+
+		message.warning('正在获取用户信息中')
+		getUserInfo(
+			this.props.userstate.token,
+			uid,
+			userinfo => {
+				Modal.info({
+					title: uid + ' 的详细信息',
+					content: (
+						<UserInfoForm userinfo={userinfo}/>
+					),
+					onOk(){}
+				})	
+			},
+			error => {
+				message.error(error)
+			}
+
+		)
+		message.success('用户信息获取成功')
+
+
 	}
 
 	handleDeleteUser(uid){
@@ -45,7 +68,7 @@ class Users extends React.Component{
 			title: '确定要删除用户 ' + uid + ' 吗？',
 			content: '将同时删除该用户所有信息，该操作不可逆转',
 			onOk(){
-				message.warning('正在删除中')
+				message.warning('正在删除用户中')
 				dispatch(deleteUser(
 						userstate.token,
 						{
@@ -56,7 +79,7 @@ class Users extends React.Component{
 							uid: uid
 						},
 						() => {
-							message.success('删除成功')
+							message.success('用户删除成功')
 						},
 						(error) => {
 							message.error(error)
@@ -73,10 +96,15 @@ class Users extends React.Component{
 		browserHistory.push('/home/user/add')
 	}
 
+	handleEditUser(uid){
+		console.log(uid)
+	}
+
 	initColumns(isAdmin,isRoot){
 
-		let onDeleteUser = this.handleDeleteUser
-		let onReviewUser = this.handleReviewUser
+		const onDeleteUser = this.handleDeleteUser
+		const onReviewUser = this.handleReviewUser
+		const onEditUser = this.handleEditUser
 
 		const columns = [{
 		  	title: '用户名',
@@ -127,7 +155,24 @@ class Users extends React.Component{
 		    			}}/>
 
 		    		{
-		    			(isAdmin&&record.gid===1)||isRoot ?  (
+		    			isRoot ?  (
+		    					<Button 
+		    						shape="circle"
+		    						icon="edit"
+					    			style={{
+					    				margin: 8
+					    			}}
+					    			type="dashed"
+						    		onClick={()=>{
+						    			onEditUser(record.uid)
+						    		}}/>
+					    			
+
+		    				) : ''
+		    		}
+
+		    		{
+		    			( isAdmin && record.gid===1 ) || isRoot ?  (
 		    					<Button 
 		    						shape="circle"
 		    						icon="delete"

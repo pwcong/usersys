@@ -30,7 +30,7 @@ class UserAdder extends React.Component{
 			isRegisting: true
 		})
 
-		this.props.dispatch(addUser(
+		addUser(
 			values.uid,
 			values.pwd,
 			() => {
@@ -48,7 +48,7 @@ class UserAdder extends React.Component{
 					message: error
 				})
 			}
-		))
+		)
 	}
 
 	handleBackClick(){

@@ -168,36 +168,58 @@ export function addUserSuccess(uid){
 
 export function addUser(uid,pwd,callbackWhenSuccess,callbackWhenError){
 
-	return dispatch => {
 
-		pwd = md5(pwd)
+	pwd = md5(pwd)
 
-		fetch('/user/register.action',{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				user: {
-					uid: uid,
-					pwd: pwd
-				}
-			})
-		}).then( response => {
-			return response.json()
-		}).then( json => {
-			if(json.status === 200){
-				callbackWhenSuccess()
+	fetch('/user/register.action',{
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			user: {
+				uid: uid,
+				pwd: pwd
 			}
-			else
-				callbackWhenError(json.message)
-		}).catch( ex => {
-			callbackWhenError("未知错误")
 		})
+	}).then( response => {
+		return response.json()
+	}).then( json => {
+		if(json.status === 200){
+			callbackWhenSuccess()
+		}
+		else
+			callbackWhenError(json.message)
+	}).catch( ex => {
+		callbackWhenError("未知错误")
+	})
 
+}
 
+export function getUserInfo(token,uid,callbackWhenSuccess,callbackWhenError){
 
-	}
+	fetch('/user_info/query.action',{
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'Token': token
+		},
+		body: JSON.stringify({
+			user: {
+				uid: uid
+			}
+		})
+	}).then( response => {
+		return response.json()
+	}).then( json => {
+		if(json.status === 200){
+			callbackWhenSuccess(json.result)
+		}
+		else
+			callbackWhenError(json.message)
+	}).catch( ex => {
+		callbackWhenError("未知错误")
+	})
 
 
 }
