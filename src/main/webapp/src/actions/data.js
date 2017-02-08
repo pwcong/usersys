@@ -223,3 +223,52 @@ export function getUserInfo(token,uid,callbackWhenSuccess,callbackWhenError){
 
 
 }
+
+export const DATA_MODIFY_USER_GROUP_SUCCESS = 'DATA_MODIFY_USER_GROUP_SUCCESS'
+
+export function modifyUserGroupSuccess(uid,gid){
+	return ({
+		type: DATA_MODIFY_USER_GROUP_SUCCESS,
+		uid,
+		gid
+	})
+}
+export function modifyUserGroup(token,user,target,callbackWhenSuccess,callbackWhenError){
+
+	return dispatch => {
+
+		fetch('/user/modify_group.action',{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'Token': token
+			},
+			body: JSON.stringify({
+				user: {
+					uid: user.uid,
+					pwd: user.pwd
+				},
+				target: {
+					uid: target.uid,
+					gid: target.gid
+				}
+			})
+		}).then( response => {
+			return response.json()
+		}).then( json => {
+			if(json.status === 200){
+				callbackWhenSuccess()
+				dispatch(modifyUserGroupSuccess(target.uid,target.gid))
+			}
+			else
+				callbackWhenError(json.message)
+		}).catch( ex => {
+			callbackWhenError("未知错误")
+		})	
+
+	}
+
+
+
+
+}

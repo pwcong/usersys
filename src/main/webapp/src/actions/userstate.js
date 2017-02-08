@@ -155,6 +155,12 @@ export function toRegister(uid,pwd,toLogin){
 			dispatch(registFailed("未知错误"))
 		})
 	}
+}
 
+export const USERSTATE_LOGOUT = "USERSTATE_LOGOUT"
 
+export function logout(){
+	return ({
+		type: USERSTATE_LOGOUT
+	})
 }

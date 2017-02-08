@@ -5,7 +5,9 @@ import {
 	DATA_GET_GROUPS_START,
 	DATA_GET_GROUPS_FAILED,
 	DATA_GET_GROUPS_SUCCESS,
-	DATA_DELETE_USER_SUCCESS
+	DATA_DELETE_USER_SUCCESS,
+	DATA_MODIFY_USER_GROUP_SUCCESS
+
 } from '../actions/data'
 
 
@@ -30,7 +32,12 @@ export const INITIAL_DATA = {
 			uid: "penjanjan",
 		}
 	],
-	groups: [],
+	groups: [
+		{"id":0,"name":"游客","read":false,"write":false,"root":false},
+		{"id":1,"name":"普通用户","read":true,"write":false,"root":false},
+		{"id":2,"name":"管理员","read":true,"write":true,"root":false},
+		{"id":9,"name":"系统","read":true,"write":true,"root":true}
+	],
 	userinfo: null
 }
 
@@ -63,6 +70,18 @@ export default (state=INITIAL_DATA,action) => {
 			return Object.assign({},state,{
 				users: state.users.filter(user => {
 					return user.uid !== action.uid
+				})
+			})
+		case DATA_MODIFY_USER_GROUP_SUCCESS:
+			return Object.assign({},state,{
+				users: state.users.map( user => {
+					if(user.uid === action.uid)
+						return ({
+							createdAt: user.createdAt,
+							uid: user.uid,
+							gid: action.gid
+						})
+					return user
 				})
 			})
 		default:

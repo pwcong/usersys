@@ -12,8 +12,16 @@
 	color: white;
 }
 
+:local .header{
+	background: #fff;
+	padding: 8px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
 :local .content-root{
-	margin: 16px;
+	margin: 8px;
 }
 
 :local .content{

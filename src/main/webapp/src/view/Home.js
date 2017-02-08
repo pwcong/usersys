@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
-import { Layout, Menu, Breadcrumb, Icon } from 'antd'
+import { Layout, Menu, Icon, Dropdown } from 'antd'
 import { connect } from 'react-redux'
 import { browserHistory} from 'react-router'
-
+import { logout } from '../actions/userstate'
 import style from './style/home.css'
  
 const { Header, Content, Footer, Sider } = Layout
@@ -18,7 +18,7 @@ class Main extends React.Component {
 
     this.onCollapse = this.onCollapse.bind(this)
     this.componentDidMount = this.componentDidMount.bind(this)
-
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
   onCollapse(collapsed){
@@ -40,7 +40,23 @@ class Main extends React.Component {
     }
   }
 
+  handleLogout(){
+    this.props.dispatch(logout())
+    browserHistory.push("/")
+  }
+
   render() {
+
+    const menu = (
+        <Menu>
+          <Menu.Item>
+            <a href="" onClick={this.handleLogout}>退出</a>
+          </Menu.Item>
+        </Menu>
+
+      )
+
+
     return (
       <Layout>
 
@@ -72,6 +88,17 @@ class Main extends React.Component {
 
         <Layout>
 
+          <Header className={style.header}>
+
+            <Dropdown overlay={menu}>
+              <a href="#">
+                欢迎您，{this.props.userstate.user.uid}
+              </a>
+            </Dropdown>
+
+
+          </Header>
+
           <Content className={style['content-root']}>
             <div className={style.content}>
               { this.props.children }
@@ -89,8 +116,8 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
-    // if(!this.props.userstate.isLogined)
-    //   browserHistory.push('/')
+    if(!this.props.userstate.isLogined)
+      browserHistory.push('/')
   }
 
 

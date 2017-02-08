@@ -1,0 +1,14 @@
+:local .root{
+	width: 350px;
+}
+
+:local .group{
+	width: 100%;
+	display: flex;
+	flex-flow: row nowrap;
+}
+
+:local .group-item{
+	flex: 1;
+	text-align: center;
+}

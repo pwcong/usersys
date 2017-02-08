@@ -2,8 +2,9 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Table, Icon, Button, Spin, notification, Modal, message } from 'antd'
 import { browserHistory } from 'react-router'
-import { getUsersAndGroups, deleteUser, getUserInfo } from '../actions/data'
+import { getUsersAndGroups, deleteUser, getUserInfo, modifyUserGroup } from '../actions/data'
 import UserInfoForm from '../component/UserInfoForm'
+import RadioButtonModal from '../component/RadioButtonModal'
 
 import style from './style/users.css'
 
@@ -14,12 +15,20 @@ class Users extends React.Component{
 	constructor(props) {
 
 		super(props)
+
+		this.state = {
+			visible: false,
+			uid: null,
+			gid: null
+		}
 		
 		this.componentDidMount = this.componentDidMount.bind(this)
 		this.handleDeleteUser = this.handleDeleteUser.bind(this)
 		this.handleReviewUser = this.handleReviewUser.bind(this)
 		this.handleAddUser = this.handleAddUser.bind(this)
 		this.handleEditUser = this.handleEditUser.bind(this)
+		this.handleEditUserSubmit = this.handleEditUserSubmit.bind(this)
+		this.handleEditUserCancel = this.handleEditUserCancel.bind(this)
 	}
 
 	componentDidMount() {
@@ -98,11 +107,43 @@ class Users extends React.Component{
 		browserHistory.push('/home/user/add')
 	}
 
-	handleEditUser(uid){
-		console.log(uid)
+	handleEditUser(uid,gid){
+		this.setState({
+			visible: true,
+			uid: uid,
+			gid: gid
+		})
 	}
 
-	initColumns(isAdmin,isRoot){
+	handleEditUserSubmit(gid){
+		message.warning('正在更改用户组中')
+		this.props.dispatch(modifyUserGroup(
+			this.props.userstate.token,
+			this.props.userstate.user,
+			{
+				uid: this.state.uid,
+				gid: gid
+			},
+			() => {
+				message.success('用户组更改成功')
+			},
+			error => {
+				message.error(error)
+			}
+		))
+		this.setState({
+			visible: false
+		})
+
+	}
+
+	handleEditUserCancel(){
+		this.setState({
+			visible: false
+		})
+	}
+
+	initColumns(isTourist,isAdmin,isRoot){
 
 		const onDeleteUser = this.handleDeleteUser
 		const onReviewUser = this.handleReviewUser
@@ -137,7 +178,7 @@ class Users extends React.Component{
 			  			)
 			  		default:
 			  			return (
-			  				<span>普通用户</span>
+			  				<span>游客</span>
 			  			)
 			  	}
 		  	}
@@ -146,15 +187,23 @@ class Users extends React.Component{
 		  	key: 'action',
 		  	render: (text, record) => (
 		    	<span>
-		    		<Button 
-		    			style={{
-		    				margin: 8
-		    			}}
-		    			icon="file-text"
-		    			shape="circle"
-		    			onClick={()=>{
-		    				onReviewUser(record.uid)
-		    			}}/>
+
+		    		{
+		    			isTourist ? '' : (
+
+								<Button 
+					    			style={{
+					    				margin: 8
+					    			}}
+					    			icon="file-text"
+					    			shape="circle"
+					    			onClick={()=>{
+					    				onReviewUser(record.uid)
+					    			}}/>
+
+		    				)
+		    		}
+		    		
 
 		    		{
 		    			isRoot ?  (
@@ -166,7 +215,7 @@ class Users extends React.Component{
 					    			}}
 					    			type="dashed"
 						    		onClick={()=>{
-						    			onEditUser(record.uid)
+						    			onEditUser(record.uid,record.gid)
 						    		}}/>
 					    			
 
@@ -199,6 +248,7 @@ class Users extends React.Component{
 
 	render(){
 
+		let isTourist = this.props.userstate.group.id === 0
 		let isAdmin = this.props.userstate.group.write
 		let isRoot = this.props.userstate.group.root
 
@@ -220,6 +270,22 @@ class Users extends React.Component{
 						) : (
 							<div className={style.content}>
 
+								<RadioButtonModal 
+									title={'更改 ' + this.state.uid + ' 的用户组'}
+									visible={this.state.visible}
+									selected={this.state.gid}
+									source={
+										this.props.data.groups.map( group => {
+											return ({
+												id: group.id,
+												text: group.name
+											})
+										})
+									}
+									onOk={ this.handleEditUserSubmit }
+									onCancel={ this.handleEditUserCancel }/>
+
+
 								{
 									isAdmin ? (
 											<Button 
@@ -239,7 +305,7 @@ class Users extends React.Component{
 									}}
 									pagination={pagination}
 									className={style.table}
-									columns={this.initColumns(isAdmin,isRoot)} 
+									columns={this.initColumns(isTourist,isAdmin,isRoot)} 
 									dataSource={users}
 									/>
 							</div>

@@ -5,7 +5,8 @@ import {
 	USERSTATE_REGIST_START,
 	USERSTATE_REGIST_FAILED,
 	USERSTATE_REGIST_SUCCESS,
-	USERSTATE_GET_GROUP
+	USERSTATE_GET_GROUP,
+	USERSTATE_LOGOUT
 } from '../actions/userstate'
 
 export const INITIAL_USERSTATE = {
@@ -72,6 +73,8 @@ export default (state=INITIAL_USERSTATE,action) => {
 			return Object.assign({},state,{
 				group: action.group
 			})
+		case USERSTATE_LOGOUT:
+			return INITIAL_USERSTATE
 		default: 
 			return state
 
