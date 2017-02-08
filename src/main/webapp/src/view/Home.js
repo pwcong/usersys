@@ -31,11 +31,11 @@ class Main extends React.Component {
       case 'overview':
         browserHistory.push('/home')
         break
-      case 'users':
+      case 'user':
         browserHistory.push('/home/user')
         break
-      case 'userinfo':
-        browserHistory.push('/home/userinfo')
+      case 'mine':
+        browserHistory.push('/home/mine')
 
     }
   }
@@ -74,11 +74,11 @@ class Main extends React.Component {
               <Icon type="home" />
               <span className="nav-text">概览</span>
             </Menu.Item>
-            <Menu.Item key="users">
+            <Menu.Item key="user">
               <Icon type="user" />
               <span className="nav-text">用户</span>
             </Menu.Item>
-            <Menu.Item key="userinfo">
+            <Menu.Item key="mine">
               <Icon type="heart-o" />
               <span className="nav-text">个人</span>
             </Menu.Item>

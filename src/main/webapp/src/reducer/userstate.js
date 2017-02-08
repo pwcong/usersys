@@ -21,7 +21,7 @@ export const INITIAL_USERSTATE = {
 		uid: null,
 		pwd: null
 	},
-	group: {"id":9,"name":"系统","read":true,"write":true,"root":true}
+	group: {"id":0,"name":"游客","read":false,"write":false,"root":false}
 }
 
 export default (state=INITIAL_USERSTATE,action) => {

@@ -8,6 +8,7 @@ import Overview from '../view/Overview'
 import User from '../view/User'
 import Users from '../view/Users'
 import UserAdder from '../view/UserAdder'
+import Mine from '../view/Mine'
 import UserInfo from '../view/UserInfo'
 
 export default (
@@ -20,7 +21,9 @@ export default (
 				<IndexRoute component={Users}/>
 				<Route path="add" component={UserAdder}/>
 			</Route>
-			<Route path="userinfo" component={UserInfo}/>
+			<Route path="mine" component={Mine}>
+				<IndexRoute component={UserInfo}/>
+			</Route>
 		</Route>
 		
 	</Route>

@@ -46,7 +46,6 @@ export function getGroupsSuccess(result){
 }
 
 
-
 export function getUsersAndGroups(token,callbackWhenError){
 
 	return ( dispatch ) => {
@@ -196,6 +195,62 @@ export function addUser(uid,pwd,callbackWhenSuccess,callbackWhenError){
 
 }
 
+export const DATA_GET_USERINFO_START = "DATA_GET_USERINFO_START"
+export function getUserInfoStart(){
+	return ({
+		type: DATA_GET_USERINFO_START
+	})
+}
+
+export const DATA_GET_USERINFO_FAILED = "DATA_GET_USERINFO_FAILED"
+export function getUserInfoFAILED(){
+	return ({
+		type: DATA_GET_USERINFO_FAILED
+	})
+}
+
+export const DATA_GET_USERINFO_SUCCESS = "DATA_GET_USERINFO_SUCCESS"
+export function getUserInfoSuccess(result){
+	return ({
+		type: DATA_GET_USERINFO_SUCCESS,
+		result
+	})
+}
+
+export function toGetUserInfo(token,uid,callbackWhenError){
+
+	return dispatch => {
+
+		fetch('/user_info/query.action',{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'Token': token
+			},
+			body: JSON.stringify({
+				user: {
+					uid: uid
+				}
+			})
+		}).then( response => {
+			return response.json()
+		}).then( json => {
+			if(json.status === 200){
+				dispatch(getUserInfoSuccess(json.result))
+			}
+			else
+				callbackWhenError(json.message)
+		}).catch( ex => {
+
+			callbackWhenError("未知错误")
+		})	
+
+
+
+	}
+
+}
+
 export function getUserInfo(token,uid,callbackWhenSuccess,callbackWhenError){
 
 	fetch('/user_info/query.action',{
@@ -268,7 +323,67 @@ export function modifyUserGroup(token,user,target,callbackWhenSuccess,callbackWh
 
 	}
 
+}
 
+export const DATA_MODIFY_USERINFO_START = "DATA_MODIFY_USERINFO_START"
+export function modifyUserInfoStart(){
+	return ({
+		type: DATA_MODIFY_USERINFO_START
+	})
+}
 
+export const DATA_MODIFY_USERINFO_FAILED = "DATA_MODIFY_USERINFO_FAILED"
+export function modifyUserInfoFAILED(){
+	return ({
+		type: DATA_MODIFY_USERINFO_FAILED
+	})
+}
+
+export const DATA_MODIFY_USERINFO_SUCCESS = "DATA_MODIFY_USERINFO_SUCCESS"
+export function modifyUserInfoSuccess(userinfo){
+	return ({
+		type: DATA_MODIFY_USERINFO_SUCCESS,
+		userinfo
+	})
+}
+
+export function toModifyUserInfo(token,user,userInfo,callbackWhenSuccess,callbackWhenError){
+
+	return dispatch => {
+
+		dispatch(modifyUserInfoStart())
+
+		fetch('/user_info/modify.action',{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'Token': token
+			},
+			body: JSON.stringify({
+				user: {
+					uid: user.uid,
+					pwd: user.pwd
+				},
+				userInfo: Object.assign({},userInfo,{
+					uid: user.uid
+				})
+			})
+		}).then( response => {
+			return response.json()
+		}).then( json => {
+			if(json.status === 200){
+				dispatch(modifyUserInfoSuccess(userInfo))
+				callbackWhenSuccess()
+			}
+			else{
+				dispatch(modifyUserInfoFAILED())
+				callbackWhenError(json.message)
+			}
+		}).catch( ex => {
+			dispatch(modifyUserInfoFAILED())
+			callbackWhenError("未知错误")
+		})	
+
+	}
 
 }

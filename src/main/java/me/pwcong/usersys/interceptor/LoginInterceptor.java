@@ -21,7 +21,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         String token = httpServletRequest.getHeader("Token");
 
         logger.info("**********************************************");
-        logger.info("验证Token："+token);
+        logger.info("验证：" + token);
         logger.info("**********************************************");
 
         return LoginStateManager.getInstance().check(token);

@@ -1,3 +1,8 @@
 :local .form{
+	width: 400px;
+}
+
+:local .form-button {
+	margin-top: 20px;
 	width: 100%;
 }

@@ -9,7 +9,7 @@ const RegisterForm = Form.create()(React.createClass({
   getInitialState() {
     return {
       passwordDirty: false
-    };
+    }
   },
   handleSubmit(e) {
     e.preventDefault()
@@ -17,7 +17,7 @@ const RegisterForm = Form.create()(React.createClass({
       if (!err) {
         this.props.onSubmit(values)
       }
-    });
+    })
   },
   handlePasswordBlur(e) {
     const value = e.target.value

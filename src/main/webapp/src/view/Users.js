@@ -156,7 +156,16 @@ class Users extends React.Component{
 		}, {
 		  	title: '注册时间',
 		  	dataIndex: 'createdAt',
-		  	key: 'createdAt'
+		  	key: 'createdAt',
+		  	render: text => {
+		  		if(text){
+		  			let date = new Date(text)
+		  			text = date.toLocaleString()
+		  		}
+		  		return (
+		  			<span>{text}</span>
+		  		)
+		  	}
 		}, {
 		  	title: '用户组',
 		  	dataIndex: 'gid',

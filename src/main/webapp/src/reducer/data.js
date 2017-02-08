@@ -6,39 +6,32 @@ import {
 	DATA_GET_GROUPS_FAILED,
 	DATA_GET_GROUPS_SUCCESS,
 	DATA_DELETE_USER_SUCCESS,
-	DATA_MODIFY_USER_GROUP_SUCCESS
-
+	DATA_MODIFY_USER_GROUP_SUCCESS,
+	DATA_GET_USERINFO_START,
+	DATA_GET_USERINFO_FAILED,
+	DATA_GET_USERINFO_SUCCESS,
+	DATA_MODIFY_USERINFO_START,
+	DATA_MODIFY_USERINFO_FAILED,
+	DATA_MODIFY_USERINFO_SUCCESS
 } from '../actions/data'
 
 
 export const INITIAL_DATA = {
+	isModifying: false,
 	isLoading: false,
 	users: [
-		{
-			createdAt: "Feb 1, 2017 1:07:05 PM",
-			gid: 9,
-			uid: "pwcong",
-		},{
-			createdAt: "Feb 1, 2017 1:07:05 PM",
-			gid: 1,
-			uid: "pliping",
-		},{
-			createdAt: "Feb 1, 2017 1:07:05 PM",
-			gid: 1,
-			uid: "maxcon",
-		},{
-			createdAt: "Feb 1, 2017 1:07:05 PM",
-			gid: 2,
-			uid: "penjanjan",
-		}
 	],
 	groups: [
-		{"id":0,"name":"游客","read":false,"write":false,"root":false},
-		{"id":1,"name":"普通用户","read":true,"write":false,"root":false},
-		{"id":2,"name":"管理员","read":true,"write":true,"root":false},
-		{"id":9,"name":"系统","read":true,"write":true,"root":true}
 	],
-	userinfo: null
+	userinfo: {
+		"uid":"",
+		"name":"",
+		"sex":0,
+		"birthday":"",
+		"email":"",
+		"phone":"",
+		"signature":""
+	}
 }
 
 export default (state=INITIAL_DATA,action) => {
@@ -47,11 +40,13 @@ export default (state=INITIAL_DATA,action) => {
 	switch(action.type){
 
 		case DATA_GET_USERS_START:
+		case DATA_GET_USERINFO_START:
 		case DATA_GET_GROUPS_START:
 			return Object.assign({},state,{
 				isLoading: true
 			})
 		case DATA_GET_GROUPS_FAILED:
+		case DATA_GET_USERINFO_FAILED:
 		case DATA_GET_USERS_FAILED:
 			return Object.assign({},state,{
 				isLoading: false
@@ -83,6 +78,23 @@ export default (state=INITIAL_DATA,action) => {
 						})
 					return user
 				})
+			})
+		case DATA_GET_USERINFO_SUCCESS:
+			return Object.assign({},state,{
+				userinfo: Object.assign({},action.result)
+			})
+		case DATA_MODIFY_USERINFO_START:
+			return Object.assign({},state,{
+				isModifying: true
+			})
+		case DATA_MODIFY_USERINFO_FAILED:
+			return Object.assign({},state,{
+				isModifying: false
+			})
+		case DATA_MODIFY_USERINFO_SUCCESS:
+			return Object.assign({},state,{
+				isModifying: false,
+				userinfo: Object.assign({},state.userinfo,action.userinfo)
 			})
 		default:
 			return state
