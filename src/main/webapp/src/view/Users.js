@@ -42,6 +42,9 @@ class Users extends React.Component{
 			this.props.userstate.token,
 			uid,
 			userinfo => {
+
+				message.success('用户信息获取成功')
+				
 				Modal.info({
 					title: uid + ' 的详细信息',
 					content: (
@@ -55,7 +58,6 @@ class Users extends React.Component{
 			}
 
 		)
-		message.success('用户信息获取成功')
 
 
 	}
