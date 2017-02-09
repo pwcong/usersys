@@ -14,7 +14,7 @@
 * [druid](https://github.com/alibaba/druid)
 * [logback](https://github.com/qos-ch/logback)
 
-前端（[webpack](https://github.com/webpack/webpack)构建项目）：
+前端（ [webpack](https://github.com/webpack/webpack) 构建项目）：
 * [React](https://github.com/facebook/react)
 * [Redux](https://github.com/reactjs/redux)
 * [React-Router](https://github.com/ReactTraining/react-router)
