@@ -27,6 +27,9 @@ public class UserGroupController extends BaseController {
     public @ResponseBody Response queryAll(){
 
         try {
+
+            logger.info("queryAll");
+
             return new Response(OK,"获取成功",userGroupService.getAllGroups());
         } catch (Exception e) {
             logger.error("query_all",e);
@@ -39,6 +42,9 @@ public class UserGroupController extends BaseController {
     public @ResponseBody Response query(@RequestBody UserGroupVo userGroupVo){
 
         try {
+
+            logger.info("query ===> "+ userGroupVo);
+
             return new Response(
                     OK,
                     "获取成功",

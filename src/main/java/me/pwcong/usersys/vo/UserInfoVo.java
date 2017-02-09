@@ -33,4 +33,12 @@ public class UserInfoVo extends BaseVo {
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
     }
+
+    @Override
+    public String toString() {
+        return "UserInfoVo{" +
+                "user=" + user +
+                ", userInfo=" + userInfo +
+                '}';
+    }
 }

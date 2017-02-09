@@ -32,4 +32,12 @@ public class UserVo extends BaseVo {
     public void setTarget(User target) {
         this.target = target;
     }
+
+    @Override
+    public String toString() {
+        return "UserVo{" +
+                "user=" + user +
+                ", target=" + target +
+                '}';
+    }
 }

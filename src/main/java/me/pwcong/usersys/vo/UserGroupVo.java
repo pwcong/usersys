@@ -23,4 +23,10 @@ public class UserGroupVo extends BaseVo {
         this.user = user;
     }
 
+    @Override
+    public String toString() {
+        return "UserGroupVo{" +
+                "user=" + user +
+                '}';
+    }
 }

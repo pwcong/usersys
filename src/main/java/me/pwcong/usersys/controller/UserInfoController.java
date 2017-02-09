@@ -27,6 +27,8 @@ public class UserInfoController extends BaseController {
 
         try {
 
+            logger.info("query ===> " + userInfoVo);
+
             UserInfo userInfo = userInfoService.getUserInfo(userInfoVo.getUser().getUid());
 
             if(userInfo!=null)
@@ -46,6 +48,9 @@ public class UserInfoController extends BaseController {
     Response modify(@RequestBody UserInfoVo userInfoVo){
 
         try {
+
+            logger.info("modify ===> " + userInfoVo);
+
             userInfoService.modify(userInfoVo.getUser(),userInfoVo.getUserInfo());
             return new Response(OK,"修改成功",null);
         } catch (Exception e) {

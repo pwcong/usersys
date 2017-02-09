@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react'
-import { Form, Button, Input } from 'antd'
-
+import { Form, Button, Input, DatePicker, Radio } from 'antd'
+import moment from 'moment'
 import style from './style.css'
 
 const FormItem = Form.Item;
+const RadioGroup = Radio.Group
 
 const UserInfoForm = Form.create()(React.createClass({
 
@@ -12,6 +13,7 @@ const UserInfoForm = Form.create()(React.createClass({
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
+
         this.props.onSubmit(values)
       }
     });
@@ -24,7 +26,7 @@ const UserInfoForm = Form.create()(React.createClass({
 
     if(birthday){
       let date = new Date(birthday)
-      birthday = date.toLocaleString().split(' ')[0]
+      birthday = moment(date)
     }
     
 
@@ -57,14 +59,35 @@ const UserInfoForm = Form.create()(React.createClass({
         <FormItem
           {...formItemLayout}
           label="性别">
-          <span>{ sex === 1 ? '男' : ( sex === 2 ? '女' : '未知') }</span>
-
+          
+          {
+            this.props.modifiable ? 
+              getFieldDecorator('sex',{
+                initialValue: sex
+              })(
+                <RadioGroup>
+                  <Radio value={0}>未知</Radio>
+                  <Radio value={1}>男</Radio>
+                  <Radio value={2}>女</Radio>
+                </RadioGroup>
+              )
+              : 
+              <span>{ sex === 1 ? '男' : ( sex === 2 ? '女' : '未知') }</span>
+          }
         </FormItem>
         <FormItem
           {...formItemLayout}
           label="生日">
-          <span>{birthday}</span>
           
+          {
+            this.props.modifiable ? 
+              getFieldDecorator('birthday',{
+                rules: [{ type: 'object' }],
+                initialValue: birthday
+              })(<DatePicker />)
+              : 
+              <span>{ birthday ? birthday.format('YYYY-MM-DD') : '' }</span>
+          }
         </FormItem>
         <FormItem
           {...formItemLayout}

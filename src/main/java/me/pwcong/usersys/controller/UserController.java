@@ -31,6 +31,8 @@ public class UserController extends BaseController{
 
         try {
 
+            logger.info("login ===> " + userVo);
+
             String token = userService.login(userVo.getUser(), DateUtils.now().getTime());
 
             LoginStateManager.getInstance().register(userVo.getUser().getUid(),token);
@@ -47,6 +49,9 @@ public class UserController extends BaseController{
     public @ResponseBody Response register(@RequestBody UserVo userVo){
 
         try {
+
+            logger.info("register ===> " + userVo);
+
             userService.register(userVo.getUser());
             return new Response(OK,"注册成功",null);
         } catch (Exception e) {
@@ -60,6 +65,9 @@ public class UserController extends BaseController{
     public @ResponseBody Response modifyPassword(@RequestBody UserVo userVo){
 
         try {
+
+            logger.info("modifyPassword ===> " + userVo);
+
             userService.modifyPassword(userVo.getUser(),userVo.getTarget());
             return new Response(OK,"修改成功",null);
         } catch (Exception e) {
@@ -72,6 +80,9 @@ public class UserController extends BaseController{
     public @ResponseBody Response modifyGroup(@RequestBody UserVo userVo){
 
         try {
+
+            logger.info("modifyGroup ===> " + userVo);
+
             userService.modifyGroup(userVo.getUser(),userVo.getTarget());
             return new Response(OK,"修改成功",null);
         } catch (Exception e) {
@@ -88,6 +99,9 @@ public class UserController extends BaseController{
 
 
         try {
+
+            logger.info("remove ===> " + userVo);
+
             userService.remove(userVo.getUser(),userVo.getTarget());
             return new Response(OK,"注销成功",null);
         } catch (Exception e) {
@@ -101,6 +115,9 @@ public class UserController extends BaseController{
     public @ResponseBody Response queryAll(){
 
         try {
+
+            logger.info("queryAll");
+
             List<User> users = userService.getAllUsers();
             return new Response(OK,"获取成功",users);
         } catch (Exception e) {

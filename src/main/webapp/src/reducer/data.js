@@ -81,7 +81,8 @@ export default (state=INITIAL_DATA,action) => {
 			})
 		case DATA_GET_USERINFO_SUCCESS:
 			return Object.assign({},state,{
-				userinfo: Object.assign({},action.result)
+				userinfo: Object.assign({},action.result),
+				isLoading: false
 			})
 		case DATA_MODIFY_USERINFO_START:
 			return Object.assign({},state,{

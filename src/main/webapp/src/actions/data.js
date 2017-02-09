@@ -203,7 +203,7 @@ export function getUserInfoStart(){
 }
 
 export const DATA_GET_USERINFO_FAILED = "DATA_GET_USERINFO_FAILED"
-export function getUserInfoFAILED(){
+export function getUserInfoFailed(){
 	return ({
 		type: DATA_GET_USERINFO_FAILED
 	})
@@ -220,6 +220,8 @@ export function getUserInfoSuccess(result){
 export function toGetUserInfo(token,uid,callbackWhenError){
 
 	return dispatch => {
+
+		dispatch(getUserInfoStart())
 
 		fetch('/user_info/query.action',{
 			method: 'POST',
@@ -238,10 +240,12 @@ export function toGetUserInfo(token,uid,callbackWhenError){
 			if(json.status === 200){
 				dispatch(getUserInfoSuccess(json.result))
 			}
-			else
+			else{
+				dispatch(getUserInfoFailed())
 				callbackWhenError(json.message)
+			}
 		}).catch( ex => {
-
+			dispatch(getUserInfoFailed())
 			callbackWhenError("未知错误")
 		})	
 
